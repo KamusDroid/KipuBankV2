@@ -37,7 +37,6 @@ Crea un archivo `.env` en la raíz del proyecto siguiendo este formato:
 SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/TU_API_KEY
 PRIVATE_KEY=tu_clave_privada_sin_0x
 ETHERSCAN_API_KEY=tu_api_key_de_etherscan
-
 ADMIN=0xTuDireccion
 ETH_USD_FEED=0x694AA1769357215DE4FAC081bf1f309aDC325306
 BANK_CAP_USD6=1000000000      # 1,000,000 USD
