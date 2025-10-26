@@ -23,9 +23,9 @@ async function main() {
   console.log("Vault:", { balance: bal.toString(), deposits: deps.toString(), withdrawals: withds.toString() });
 
   // Withdraw a smaller amount
-  const wd = await bank.withdrawETH(ethers.parseEther("0.0002"));
+  const wd = await bank.withdrawETH(ethers.parseEther("0.0001"));
   await wd.wait();
-  console.log("Withdrawn 0.0002 ETH");
+  console.log("Withdrawn 0.0001 ETH");
 }
 
 main().catch((e) => {
