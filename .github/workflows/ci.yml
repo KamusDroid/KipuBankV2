@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile
+        run: npm run compile
+
+      - name: Lint Solidity
+        run: npm run lint:sol
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Gas report
+        run: REPORT_GAS=true npm test
+        env:
+          CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
+
+      - name: Coverage
+        run: npm run coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: coverage
+
+      - name: Upload gas report (stdout)
+        if: always()
+        run: |
+          mkdir -p artifacts-ci
+          echo "See test logs for gas report (hardhat-gas-reporter)" > artifacts-ci/GAS_REPORT.txt
+
+      - name: Upload gas artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gas-report
+          path: artifacts-ci/GAS_REPORT.txt
